@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Post List</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="10">
+          <ion-searchbar class="ion-no-padding" mode="md" [(ngModel)]="searchText"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding class="postList">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-list *ngIf="posts.length">
+    <ion-item *ngFor="let post of posts | listFilter:searchText ">
+      <ion-label text-wrap>
+        <h3>{{post.id}}#{{post.title}}</h3>
+        <p>{{post.body}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-card *ngIf="!posts.length" text-align="center">
+    <ion-card-content>
+      <div text-center>
+        No posts found
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
